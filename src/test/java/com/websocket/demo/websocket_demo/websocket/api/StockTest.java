@@ -18,14 +18,14 @@ public class StockTest {
     @Test
     public void testStock(){
         String host = "https: //stock.api51.cn";
-        String path = "/real";
+        String path = "/stock/";
         String method = "GET";
         String appcode = "你自己的AppCode";
         Map<String, String> headers = new HashMap<String, String>();
+        //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
         headers.put("Authorization", "APPCODE" + appcode);
         Map<String, String> querys = new HashMap<String, String>();
         querys.put("en_prod+code", "000001.SZ");
-        querys.put("fields", "open_px, high_px, low_px, last_px, business_amount, business_balance, offer_grp, bid_grep");
 
         try{
             HttpResponse response = HttpUtils.doGet(host,path, method, headers, querys);
