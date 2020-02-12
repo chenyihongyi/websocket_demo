@@ -19,10 +19,12 @@ public class V5StockInfoController {
 
     /**
      * 股票推送controller
+     *
      */
-    @Scheduled(fixedRate = 1000)
+    //访问地址：localhost:8080/v5/index.html
+/*    @Scheduled(fixedRate = 1000)
     public void stockInfo() {
         ws.sendStockInfo();
 
-    }
+    }*/
 }
