@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
  * @Date: 2020/2/12 3:26
  */
 @Controller
-public class GameInfoController {
+public class V2GameInfoController {
 
     @Autowired
     private WebSocketService ws;

@@ -1,6 +1,7 @@
 package com.websocket.demo.websocket_demo.controller.v5;
 
 import com.websocket.demo.websocket_demo.service.WebSocketService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -13,13 +14,13 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class V5StockInfoController {
 
-private WebSocketService ws;
+    @Autowired
+    private WebSocketService ws;
 
     /**
      * 股票推送controller
      */
-    @MessageMapping("/v5/schedule/push_stock")
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 1000)
     public void stockInfo() {
         ws.sendStockInfo();
 
