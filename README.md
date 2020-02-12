@@ -22,10 +22,8 @@
  https://github.com/aliyun/api-gateway-demo-sign-java
  HttpUtils
  
- 1、大话websocket及课程介绍
- 	简介：
- 		websocket介绍、使用场景分享、学习课程需要什么基础
- 	笔记:
+ 
+ 1.笔记:
  		websocket介绍：
  			WebSocket协议是基于TCP的一种新的网络协议。它实现了浏览器与服务器全双工(full-duplex)通信——允许服务器主动发送信息给客户端
  
@@ -38,10 +36,8 @@
  
  
  
- 2、课程技术选型和浏览器兼容讲解
- 	简介：
- 		简单介绍什么是springboot、socketjs、stompjs，及解决使用浏览器兼容问题
- 	笔记：
+ 
+2.笔记：
  	知识点:
  		技术框架基本介绍
  			springboot：

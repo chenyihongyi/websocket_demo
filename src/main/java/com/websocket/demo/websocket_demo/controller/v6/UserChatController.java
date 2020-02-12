@@ -1,7 +1,11 @@
 package com.websocket.demo.websocket_demo.controller.v6;
 
+import com.websocket.demo.websocket_demo.model.InMessage;
 import com.websocket.demo.websocket_demo.service.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,5 +57,26 @@ public class UserChatController {
         } else{
             return "redirect:/v6/error.html";
         }
+    }
+
+    /**
+     * 用于定时给客户端推送在线用户
+     */
+    @Scheduled(fixedRate = 2000)
+    public void onlineUser(){
+        ws.sendOnlineUser(onlineUser);
+    }
+
+    /**
+     * 多人群聊聊天接口
+     * @param message
+     * @param headerAccessor
+     */
+    @MessageMapping("/v6/chat")
+    public void topicChat(InMessage message,SimpMessageHeaderAccessor headerAccessor){
+        String sessionId = headerAccessor.getSessionAttributes().get("sessionId").toString();
+        User user = onlineUser.get(sessionId);
+        message.setFrom(user.getUsername());
+        ws.sendTopicChat(message);
     }
 }

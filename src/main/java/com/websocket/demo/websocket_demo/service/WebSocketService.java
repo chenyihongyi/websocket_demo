@@ -7,6 +7,7 @@ package com.websocket.demo.websocket_demo.service;
  */
 
 import com.websocket.demo.websocket_demo.controller.v5.StockService;
+import com.websocket.demo.websocket_demo.controller.v6.User;
 import com.websocket.demo.websocket_demo.model.InMessage;
 import com.websocket.demo.websocket_demo.model.OutMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,26 @@ public class WebSocketService {
 
             template.convertAndSend("/topic/stock_info",new OutMessage(msg));
         }
+    }
+
+    /**
+     * 发送在线用户
+     * @param onlineUser
+     */
+    public void sendOnlineUser(Map<String, User> onlineUser) {
+        String msg = "";
+        for (Map.Entry<String, User> entry : onlineUser.entrySet()) {
+            msg = msg.concat(entry.getValue().getUsername() + "||");
+        }
+        template.convertAndSend("/topic/onlineuser", msg);
+    }
+
+    /**
+     * 用于多人聊天
+     * @param message
+     */
+    public void sendTopicChat(InMessage message) {
+        String msg = message.getFrom() + "发送:"+message.getContent();
+        template.convertAndSend("/topic/chat", new OutMessage(msg));
     }
 }
