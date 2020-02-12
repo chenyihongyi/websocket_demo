@@ -13,15 +13,14 @@ function setConnected(connected) {
 }
 
 function connect() {
-    var socket = new SockJS('/endpoint-websocket'); //连接上端点(基站)
-
-    stompClient = Stomp.over(socket);			//用stom进行包装，规范协议
+	var from = $("#from").val();
+	var socket = new SockJS('/endpoint-websocket');
+    stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/game_chat', function (result) {
-            console.info(result)
-            showContent(JSON.parse(result.body));
+        stompClient.subscribe('/chat/single/'+from, function (result) {
+        	showContent(JSON.parse(result.body));
         });
     });
 }
@@ -35,17 +34,15 @@ function disconnect() {
 }
 
 function sendName() {
-
-    stompClient.send("/app/v1/chat", {}, JSON.stringify({'content': $("#content").val()}));
+	
+    stompClient.send("/app/v3/single/chat", {}, JSON.stringify({'content': $("#content").val(), 'to':$("#to").val(), 'from':$("#from").val()}));
+    
+    
 }
 
 function showContent(body) {
     $("#notice").append("<tr><td>" + body.content + "</td> <td>"+new Date(body.time).toLocaleString()+"</td></tr>");
 }
-
-
-
-
 
 $(function () {
     $("form").on('submit', function (e) {

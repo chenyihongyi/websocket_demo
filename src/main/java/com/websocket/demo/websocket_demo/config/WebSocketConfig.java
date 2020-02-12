@@ -1,5 +1,6 @@
 package com.websocket.demo.websocket_demo.config;
 
+import com.websocket.demo.websocket_demo.intecepter.HttpHandShakeIntecepter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.MessageConverter;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -20,7 +21,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     //注册端点，发布或者订阅消息的时候需要连接此端点
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/endpoint-websocket").setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/endpoint-websocket").addInterceptors(new HttpHandShakeIntecepter()).setAllowedOrigins("*").withSockJS();
     }
 
     /**

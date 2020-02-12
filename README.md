@@ -18,6 +18,10 @@
  
  在controller的类的方法上标注@Scheduled(fixedRate = 3000)  表示这个方法会定时3s执行
  
+ 3.httpClient 工具类
+ https://github.com/aliyun/api-gateway-demo-sign-java
+ HttpUtils
+ 
  
  
  

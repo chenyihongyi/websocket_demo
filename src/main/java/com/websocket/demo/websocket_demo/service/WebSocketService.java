@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 /**
  * 简单消息模板，用来推送消息
  */
@@ -46,5 +48,19 @@ public class WebSocketService {
         String message = String.format("服务器可用处理器:%s; 虚拟机空闲内容大小:%s; 最大内存大小: %s;", processors, freeMem, maxMem);
 
         template.convertAndSend("/topic/server_info", new OutMessage(message));
+    }
+
+    /**
+     * 股票信息推送
+     */
+    public void sendStockInfo() {
+        Map<String, String> stockInfoMap = StockService.getStockInfo();
+        String msgTpl = "名称: %s; 价格: %s元; 最高价:%s; 最低价: %s; 涨跌幅: %s; 市盈率TTM: %s;  总市值: %s";
+
+        if(null !=stockInfoMap){
+            String msg = String.format(msgTpl, stockInfoMap.get("prod_name"), stockInfoMap.get("last_px"), stockInfoMap.get("high_px"),
+                    stockInfoMap.get("low_px"), stockInfoMap.get("px_change"), stockInfoMap.get("market_value"), stockInfoMap.get("amplitude"));
+            template.convertAndSend("/topic/stock_info", new OutMessage(msg));
+        }
     }
 }
